@@ -15,15 +15,20 @@ DBSession = sessionmaker(bind=engine)
 
 session = DBSession()
 
+theCreator = User(name='The Creator',
+                  email='OmnipotentOne@gmail.com')
+
 round = Cat(name='Round',
             image='https://sociorocketnewsen.files.wordpress.com/2013/10/maru-top.jpg',
             description='He likes boxes',
-            category='Fat Cat')
+            category='Fat Cat',
+            user=theCreator)
 
 wigglesborth = Cat(name='WigglesBorth',
                    image='http://www.cinemacats.com/wp-content/uploads/movies/austinpowersint05.jpg',
                    description='Cat of Dr No So Evil',
-                   category='Hairless Cat')
+                   category='Hairless Cat',
+                   user=theCreator)
 
 session.add_all(round, wigglesborth)
 session.commit()
