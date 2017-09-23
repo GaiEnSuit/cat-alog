@@ -30,5 +30,5 @@ wigglesborth = Cat(name='WigglesBorth',
                    category='Hairless Cat',
                    user=theCreator)
 
-session.add_all(round, wigglesborth)
+session.add_all(theCreator, round, wigglesborth)
 session.commit()
