@@ -4,4 +4,5 @@ REQUIREMENTS
 USAGE
 
 1. Move project folder into virtual machine
-2. Run database_setup.py
+2. Run database_setup.py to create and configure database
+
