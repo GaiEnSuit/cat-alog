@@ -1,5 +1,6 @@
 REQUIREMENTS
-1. Have Python3 installed
+1. Python3
+2. SQlalchemy
 
 USAGE
 
