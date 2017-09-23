@@ -10,22 +10,25 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
 # Instantiate declarative base
-Base =  declarative_base()
+Base = declarative_base()
+
 
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    username = Column(String(250), nullable=False)
-    password = Column(String(250), nullable=False)
-    
+    email = Column(String(250), nullable=False)
+
 
 class Cat(Base):
     __tablename__ = 'cat'
+    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     name = Column(String(250))
-    image = Column (String(250))
+    image = Column(String(250))
     description = Column(String(250))
+    category = Column(String(250))
+    user = relationship(User)
 
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
