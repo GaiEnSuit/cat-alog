@@ -15,9 +15,10 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/')
 def HelloWorld():
-    print 'Hello World'
+    return 'Hello World'
 
 if __name__ == '__main__':
     app.debug = True
