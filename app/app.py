@@ -2,6 +2,7 @@
 
 # Flask setup
 from flask import Flask
+from flask import render_template
 app = Flask(__name__)
 
 # SQlalchemy setup
@@ -15,10 +16,11 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-
 @app.route('/')
+@app.route('/<string:category>/')
 def HelloWorld():
-    return 'Hello World'
+    cats = session.query(Cat).all()
+    return render_template("/index.html", cats=cats)
 
 if __name__ == '__main__':
     app.debug = True
