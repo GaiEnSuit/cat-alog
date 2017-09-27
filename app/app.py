@@ -28,7 +28,7 @@ def home():
 @app.route('/<chosenCategory>/')
 def sorted(chosenCategory):
     categories = session.query(Cat.category).distinct()
-    cats = session.query(Cat).filter(Cat.category==chosenCategory).all()
+    cats = session.query(Cat).filter_by(category=chosenCategory).all()
     return render_template('/index.html', cats=cats, categories=categories, chosenCategory=chosenCategory)
 
 

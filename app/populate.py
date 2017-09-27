@@ -23,7 +23,7 @@ session.add(theCreator)
 round = Cat(name='Round',
             image='https://sociorocketnewsen.files.wordpress.com/2013/10/maru-top.jpg',
             description='He likes boxes',
-            category='Fat',
+            category='fat',
             user=theCreator)
 
 session.add(round)
@@ -32,7 +32,7 @@ session.add(round)
 wigglesborth = Cat(name='WigglesBorth',
                    image='http://www.cinemacats.com/wp-content/uploads/movies/austinpowersint05.jpg',
                    description='Cat of Dr No So Evil',
-                   category='Hairless',
+                   category='hairless',
                    user=theCreator)
 
 session.add(wigglesborth)
