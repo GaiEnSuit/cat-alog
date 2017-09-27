@@ -3,6 +3,7 @@
 # Flask setup
 from flask import Flask
 from flask import render_template
+from flask import redirect, url_for
 app = Flask(__name__)
 
 # SQlalchemy setup
@@ -49,6 +50,9 @@ def editCat(id):
 
 @app.route('/<int:id>/delete/')
 def deleteCat(id):
+    deletedCat = session.query(Cat).filter_by(id=id).one()
+    session.delete(deletedCat)
+    session.commit()
     return redirect('/')
 
 if __name__ == '__main__':

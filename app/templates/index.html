@@ -33,7 +33,7 @@
               </div>
               <div class="mdl-card__supporting-text">
                 {% for i in categories %}
-                <button class="mdl-button mdl-js-button display-block">{{i.category}}</button>
+                <button class="mdl-button mdl-js-button display-block"><a href="/{{i.category}}">{{i.category}}</a></button>
                 {% endfor %}
               </div>
           </div>
@@ -51,6 +51,8 @@
             <div class="mdl-card__supporting-text">
               {% for i in cats %}
               <h3>{{i.name}}</h3>
+              <a href="#">Edit</a>
+              <a href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
               {% endfor %}
             </div>
           </div>
