@@ -25,33 +25,13 @@
       </header>
       <main class="mdl-layout__content">
         <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone mdl-card mdl-shadow--8dp">
-              <div class="mdl-card__title mdl-card--border">
-                <h1 class="mdl-card__title-text">
-                  Category
-                </h1>
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-card">
+            <div class="mdl-card--boder mdl-shadow--8dp">
+              <div class="mdl-card__title">
+                <div class="mdl-card__title-text">
+                  <h1>New Cat</h1>
+                </div>
               </div>
-              <div class="mdl-card__supporting-text">
-                {% for i in categories %}
-                <button class="mdl-button mdl-js-button display-block">{{i.category}}</button>
-                {% endfor %}
-              </div>
-          </div>
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-phone mdl-card mdl-shadow--8dp">
-            <div class="mdl-card__title mdl-card--border">
-              <h1 class="mdl-card__title-text">
-                {% if chosenCategory %}
-                  {{chosenCategory.upper()}}
-                {% else %}
-                  ALL
-                {% endif %}
-                CATS
-              </h1>
-            </div>
-            <div class="mdl-card__supporting-text">
-              {% for i in cats %}
-              <h3>{{i.name}}</h3>
-              {% endfor %}
             </div>
           </div>
         </div>
