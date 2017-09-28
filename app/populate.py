@@ -21,7 +21,6 @@ session.add(theCreator)
 
 # Add new cat to databse
 round = Cat(name='Round',
-            image='https://sociorocketnewsen.files.wordpress.com/2013/10/maru-top.jpg',
             description='He likes boxes',
             category='fat',
             user=theCreator)
@@ -30,7 +29,6 @@ session.add(round)
 
 # Add second cat to databse
 wigglesborth = Cat(name='WigglesBorth',
-                   image='http://www.cinemacats.com/wp-content/uploads/movies/austinpowersint05.jpg',
                    description='Cat of Dr No So Evil',
                    category='hairless',
                    user=theCreator)
