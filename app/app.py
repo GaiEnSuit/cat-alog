@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
 # Flask setup
-from flask import Flask
-from flask import render_template
-from flask import redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 app = Flask(__name__)
 
 # SQlalchemy setup
@@ -26,6 +24,7 @@ def home():
     cats = session.query(Cat).all()
     return render_template('/index.html', cats=cats, categories=categories)
 
+
 @app.route('/<chosenCategory>/')
 def sorted(chosenCategory):
     categories = session.query(Cat.category).distinct()
@@ -33,9 +32,15 @@ def sorted(chosenCategory):
     return render_template('/index.html', cats=cats, categories=categories, chosenCategory=chosenCategory)
 
 
-@app.route('/new/')
+@app.route('/new/', methods=['GET', 'POST'])
 def newCat():
-    return render_template('/new.html')
+    if request.method == 'POST':
+        newCat = Cat(name=request.form['name'], description=request.form['description'], category=request.form['category'])
+        session.add(newCat)
+        session.commit()
+        return redirect('/', code=302)
+    else:
+        return render_template('/new.html')
 
 
 @app.route('/<int:id>/detail/')

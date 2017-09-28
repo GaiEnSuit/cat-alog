@@ -27,7 +27,6 @@ class Cat(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     name = Column(String(250), nullable=False)
-    image = Column(String(250), nullable=False)
     description = Column(String(250), nullable=False)
     category = Column(String(250), nullable=False)
     user = relationship(User)
