@@ -48,9 +48,18 @@ def detailCat(id):
     return render_template('/detail.html')
 
 
-@app.route("/<int:id>/edit/")
+@app.route("/<int:id>/edit/", methods=['GET', 'POST'])
 def editCat(id):
-    return render_template('/edit.html', id=id)
+    editedCat = session.query(Cat).filter_by(id=id).one()
+    if request.method == 'POST':
+        editedCat.name=request.form['name']
+        editedCat.description=request.form['description']
+        editedCat.category=request.form['category']
+        session.add(editedCat)
+        session.commit()
+        return redirect('/', code=302)
+    else:
+        return render_template('/edit.html', i = editedCat)
 
 
 @app.route('/<int:id>/delete/')

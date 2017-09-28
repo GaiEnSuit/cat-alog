@@ -26,19 +26,19 @@
       </header>
       <main class="mdl-layout__content">
         <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-card mdl-card--boder mdl-shadow--8dp">
-            <div class="mdl-card__title">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone mdl-card mdl-shadow--8dp">
+            <div class="mdl-card__title mdl-card--border">
               <div class="mdl-card__title-text">
-                <h1>New Cat</h1>
+                <h3>New Cat</h3>
               </div>
             </div>
             <form method="POST" action="{{ url_for('newCat') }}">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="name" name="name">
+                <input class="mdl-textfield__input" type="text" id="name" name="name" required>
                 <label class="mdl-textfield__label" for="name">Name</label>
               </div><br />
               <div class="mdl-textfield mdl-js-textfield">
-                <textarea class="mdl-textfield__input" type="text" rows= "3" id="description" name="description"></textarea>
+                <textarea class="mdl-textfield__input" type="text" rows= "3" id="description" name="description" required></textarea>
                 <label class="mdl-textfield__label" for="descripiton">Description</label>
               </div><br />
               Category:<br />

@@ -53,7 +53,7 @@
             <div class="mdl-card__supporting-text">
               {% for i in cats %}
               <h3>{{i.name}}</h3>
-              <a href="#">Edit</a>
+              <a href="{{url_for('editCat', id=i.id)}}">Edit</a>
               <a href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
               {% endfor %}
             </div>
