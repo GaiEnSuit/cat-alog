@@ -33,9 +33,9 @@
                 </h1>
               </div>
               <div class="mdl-card__supporting-text">
-                <button class="mdl-button mdl-js-button display-block"><a href="/">All</a></button>
+                <a href="/" class="mdl-button mdl-js-button display-block">All</a>
                 {% for i in categories %}
-                <button class="mdl-button mdl-js-button display-block"><a href="/{{i.category}}">{{i.category}}</a></button>
+                <a href="/{{i.category}}" class="mdl-button mdl-js-button display-block">{{i.category}}</a>
                 {% endfor %}
               </div>
           </div>
@@ -52,16 +52,16 @@
             </div>
             <div class="mdl-card__supporting-text">
               {% for i in cats %}
-              <h3>{{i.name}}</h3>
-              <a href="{{url_for('editCat', id=i.id)}}">Edit</a>
-              <a href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
+              <a href="{{url_for('detailCat', id=i.id)}}"><h3>{{i.name}}</h3></a>
+              <a class="mdl-button mdl-js-button" href="{{url_for('editCat', id=i.id)}}">Edit</a>
+              <a class="mdl-button mdl-js-button" href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
               {% endfor %}
             </div>
 
             <div class="mdl-card__menu">
-              <a href="/new"><button id="newCat" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+              <a href="/new" id="newCat" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                 <i class="material-icons">add</i>
-              </button></a>
+              </a>
             </div>
           </div>
         </div>

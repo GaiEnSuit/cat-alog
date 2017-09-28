@@ -14,12 +14,14 @@ from sqlalchemy import create_engine
 # Instantiate declarative base
 Base = declarative_base()
 
+
 # table for users
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
+
 
 # table for cats
 class Cat(Base):
