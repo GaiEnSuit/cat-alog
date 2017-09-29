@@ -10,3 +10,8 @@ USAGE
 3. Run populate.py to populate initial data to databse
 4. Run app.py
 5. Open web browser and navigate to localhost:5000
+
+API
+
+1. URL "localhost:5000/id/JSON" returns single cat with corresponding id
+2. URL "localhost:5000/JSON" return all cats
