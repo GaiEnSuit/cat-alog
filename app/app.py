@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 # Flask setup
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 app = Flask(__name__)
 
 # SQLalchemy Import
@@ -72,6 +72,18 @@ def deleteCat(id):
     session.delete(deletedCat)
     session.commit()
     return redirect('/')
+
+
+@app.route('/JSON/')
+def allCatJson():
+    queriedCats = session.query(Cat).all()
+    return jsonify(cats=[i.serialize for i in queriedCats])
+
+
+@app.route('/<int:id>/JSON/')
+def oneCatJSON(id):
+    cat = session.query(Cat).filter_by(id=id).one()
+    return jsonify(cat.serialize)
 
 if __name__ == '__main__':
     app.debug = True

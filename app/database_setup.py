@@ -33,6 +33,18 @@ class Cat(Base):
     category = Column(String(250), nullable=False)
     user = relationship(User)
 
+    # Serialize Function
+    @property
+    def serialize(self):
+        return {
+            'name': self.name,
+            'description': self.description,
+            'id': self.id,
+            'category': self.category
+        }
+
+
+
 # create database
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
