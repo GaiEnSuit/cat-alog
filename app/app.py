@@ -17,6 +17,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+# Home Route
 @app.route('/')
 def home():
     categories = session.query(Cat.category).distinct()
@@ -24,6 +25,7 @@ def home():
     return render_template('/index.html', cats=cats, categories=categories)
 
 
+# Sorted Home Route
 @app.route('/<chosenCategory>/')
 def sorted(chosenCategory):
     categories = session.query(Cat.category).distinct()
@@ -33,6 +35,7 @@ def sorted(chosenCategory):
                            chosenCategory=chosenCategory)
 
 
+# Route for new data
 @app.route('/new/', methods=['GET', 'POST'])
 def newCat():
     if request.method == 'POST':
@@ -46,12 +49,14 @@ def newCat():
         return render_template('/new.html')
 
 
+# Route for detailed item
 @app.route('/<int:id>/detail/')
 def detailCat(id):
     detailCat = session.query(Cat).filter_by(id=id).one()
     return render_template('/detail.html', i=detailCat)
 
 
+# Route to edit item
 @app.route("/<int:id>/edit/", methods=['GET', 'POST'])
 def editCat(id):
     editedCat = session.query(Cat).filter_by(id=id).one()
@@ -66,6 +71,7 @@ def editCat(id):
         return render_template('/edit.html', i=editedCat)
 
 
+# Route to delete item
 @app.route('/<int:id>/delete/')
 def deleteCat(id):
     deletedCat = session.query(Cat).filter_by(id=id).one()
@@ -74,6 +80,7 @@ def deleteCat(id):
     return redirect('/')
 
 
+# JSON API
 @app.route('/JSON/')
 def allCatJson():
     queriedCats = session.query(Cat).all()
