@@ -1,14 +1,22 @@
 #!/usr/bin/python3
 
 # Flask setup
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify, session as login_session, make_response
 app = Flask(__name__)
 
 # SQLalchemy Import
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from database_setup import Base, User, Cat
-# Connect to databse
+
+# Python Libraries
+import json, httplib2
+
+# Authorization Imports
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
+# Connect to database
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
 
@@ -79,6 +87,32 @@ def deleteCat(id):
     session.commit()
     return redirect('/')
 
+
+# Login In Route
+@app.route('/login', methods=['POST'])
+def logIn():
+    # Client ID
+    CLIENT_ID = "453291100677-8rb7dji1pcvpvu2hqpp5idr6n4e3o22d.apps.googleusercontent.com"
+    # Receive HTTPS data
+    token = request.args.get("id_token")
+    # Validate ID Token
+    idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+    # Validate Issuer
+    if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+        raise ValueError('Wrong issuer.')
+    # ID token is valid. Get the user's Google Account ID from the decoded token.
+    login_session['sub'] = idinfo['sub']
+    login_session['name'] = idinfo['name']
+    login_session['email'] = idinfo['email']
+    return "success"
+
+
+# Create new user
+def createUser(userID, userName, userEmail):
+    newUser = User(name=userName, id=userID, email=userEmail)
+    session.add(newUser)
+    session.commit()
+    return
 
 # JSON API
 @app.route('/JSON/')

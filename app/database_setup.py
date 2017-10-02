@@ -33,7 +33,7 @@ class Cat(Base):
     category = Column(String(250), nullable=False)
     user = relationship(User)
 
-    # Serialize Function
+    # Serialize for API
     @property
     def serialize(self):
         return {

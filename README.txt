@@ -2,6 +2,7 @@ REQUIREMENTS
 1. Python3
 2. SQlalchemy
 3. Sqlite
+4. Requires google authentication library for python http://google-auth.readthedocs.io/en/latest/index.html#google-auth
 
 USAGE
 
