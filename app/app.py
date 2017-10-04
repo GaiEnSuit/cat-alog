@@ -30,17 +30,22 @@ session = DBSession()
 def home():
     categories = session.query(Cat.category).distinct()
     cats = session.query(Cat).all()
-    return render_template('/index.html', cats=cats, categories=categories)
-
+    if 'sub' not in login_session:
+        return render_template('/index.html', cats=cats, categories=categories)
+    else:
+        return render_template('/index.html', cats=cats, categories=categories, id=login_session['sub'])
 
 # Sorted Home Route
 @app.route('/<chosenCategory>/')
 def sorted(chosenCategory):
     categories = session.query(Cat.category).distinct()
     cats = session.query(Cat).filter_by(category=chosenCategory).all()
-    return render_template('/index.html',
-                           cats=cats, categories=categories,
-                           chosenCategory=chosenCategory)
+    if 'sub' not in login_session:
+        return render_template('/index.html',
+                               cats=cats, categories=categories,
+                               chosenCategory=chosenCategory)
+    else:
+        return render_template('/index.html', cats=cats, categories=categories, id=login_session['sub'])
 
 
 # Route for new data
@@ -49,19 +54,26 @@ def newCat():
     if request.method == 'POST':
         newCat = Cat(name=request.form['name'],
                      description=request.form['description'],
-                     category=request.form['category'])
+                     category=request.form['category'],
+                     user_id=login_session['sub'])
         session.add(newCat)
         session.commit()
         return redirect('/', code=302)
     else:
-        return render_template('/new.html')
+        if 'sub' not in login_session:
+            return redirect('/', code=302)
+        else:
+            return render_template('/new.html')
 
 
 # Route for detailed item
 @app.route('/<int:id>/detail/')
 def detailCat(id):
     detailCat = session.query(Cat).filter_by(id=id).one()
-    return render_template('/detail.html', i=detailCat)
+    if 'sub' not in login_session:
+        return render_template('/detail.html', i=detailCat)
+    else:
+        return render_template('/detail.html', i=detailCat, id=login_session['sub'])
 
 
 # Route to edit item
@@ -76,16 +88,22 @@ def editCat(id):
         session.commit()
         return redirect('/', code=302)
     else:
-        return render_template('/edit.html', i=editedCat)
+        if editedCat.user_id != login_session['sub']:
+            return redirect('/', code=302)
+        else:
+            return render_template('/edit.html', i=editedCat)
 
 
 # Route to delete item
-@app.route('/<int:id>/delete/')
+@app.route('/<int:id>/delete/', methods=['POST'])
 def deleteCat(id):
     deletedCat = session.query(Cat).filter_by(id=id).one()
-    session.delete(deletedCat)
-    session.commit()
-    return redirect('/')
+    if deletedCat.user_id != login_session['sub']:
+        return redirect('/', code=302)
+    else:
+        session.delete(deletedCat)
+        session.commit()
+        return redirect('/', code=302)
 
 
 # Login In Route
@@ -94,25 +112,39 @@ def logIn():
     # Client ID
     CLIENT_ID = "453291100677-8rb7dji1pcvpvu2hqpp5idr6n4e3o22d.apps.googleusercontent.com"
     # Receive HTTPS data
-    token = request.args.get("id_token")
+    token = request.args.get('idtoken')
     # Validate ID Token
     idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
     # Validate Issuer
     if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
         raise ValueError('Wrong issuer.')
     # ID token is valid. Get the user's Google Account ID from the decoded token.
-    login_session['sub'] = idinfo['sub']
-    login_session['name'] = idinfo['name']
-    login_session['email'] = idinfo['email']
-    return "success"
+    else:
+        userid = idinfo['sub']
+        name = idinfo['name']
+        email = idinfo['email']
+        login_session['sub'] = userid
+        login_session['name'] = name
+        login_session['email'] = email
+        if session.query(User).filter_by(id = userid).first() == None:
+            newUser = User(id=userid, name=name, email=email)
+            session.add(newUser)
+            session.commit()
+            return redirect('/', code=302)
+        else:
+            return redirect('/', code=302)
 
 
-# Create new user
-def createUser(userID, userName, userEmail):
-    newUser = User(name=userName, id=userID, email=userEmail)
-    session.add(newUser)
-    session.commit()
-    return
+
+
+
+# Login In Route
+@app.route('/logout', methods=['POST'])
+def logOut():
+    del login_session['sub']
+    del login_session['name']
+    del login_session['email']
+    return redirect('/', code="302")
 
 # JSON API
 @app.route('/JSON/')
@@ -129,3 +161,4 @@ def oneCatJSON(id):
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'

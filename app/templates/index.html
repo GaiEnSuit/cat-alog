@@ -66,8 +66,10 @@
             <div class="mdl-card__supporting-text">
               {% for i in cats %}
               <a href="{{url_for('detailCat', id=i.id)}}"><h3>{{i.name}}</h3></a>
-              <a class="mdl-button mdl-js-button" href="{{url_for('editCat', id=i.id)}}">Edit</a>
-              <a class="mdl-button mdl-js-button" href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
+                {% if id == i.user_id %}
+                <a class="mdl-button mdl-js-button" href="{{url_for('editCat', id=i.id)}}">Edit</a>
+                <a class="mdl-button mdl-js-button" href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
+                {% endif %}
               {% endfor %}
             </div>
 

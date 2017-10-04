@@ -38,8 +38,10 @@
               Description: {{i.description}}
             </div>
             <div class="mdl-card__actions">
+              {% if id == i.user_id %}
               <a class="mdl-button" href="{{url_for('editCat', id=i.id)}}">Edit</a>
               <a class="mdl-button" href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
+              {%  endif %}
             </div>
             <div class="mdl-card__menu">
               <a href="/"class="mdl-button mdl-button--icon">
