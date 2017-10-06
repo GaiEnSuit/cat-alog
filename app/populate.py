@@ -13,25 +13,17 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-# Add new user to database
-theCreator = User(name='The Creator',
-                  email='OmnipotentOne@gmail.com')
-
-session.add(theCreator)
-
 # Add new cat to databse
 round = Cat(name='Round',
             description='He likes boxes',
-            category='fat',
-            user=theCreator)
+            category='fat')
 
 session.add(round)
 
 # Add second cat to databse
 wigglesborth = Cat(name='WigglesBorth',
                    description='Cat of Dr No So Evil',
-                   category='hairless',
-                   user=theCreator)
+                   category='hairless')
 
 session.add(wigglesborth)
 

@@ -18,7 +18,7 @@ Base = declarative_base()
 # table for users
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    id = Column(String, primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
 
@@ -27,7 +27,7 @@ class User(Base):
 class Cat(Base):
     __tablename__ = 'cat'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(String, ForeignKey('user.id'))
     name = Column(String(250), nullable=False)
     description = Column(String(250), nullable=False)
     category = Column(String(250), nullable=False)

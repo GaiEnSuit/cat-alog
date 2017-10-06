@@ -4,6 +4,14 @@ REQUIREMENTS
 3. Sqlite
 4. Requires google authentication library for python http://google-auth.readthedocs.io/en/latest/index.html#google-auth
 5. Open port 5000
+6. In the Log In Route replace placeholder with your google Client Id
+
+Example:
+# Login In Route
+@app.route('/login', methods=['POST'])
+def logIn():
+# Client ID
+CLIENT_ID = "CLIENT ID HERE"
 
 USAGE
 

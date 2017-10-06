@@ -34,8 +34,8 @@
             Cat-Alog
           </span>
         </div>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <div class="mdl-button" href="#" onclick="signOut();">Sign out</div>
+        <div id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div id="signOutButton" class="mdl-button display-none" href="#" onclick="signOut();">Sign out</div>
       </header>
       <main class="mdl-layout__content">
         <div class="mdl-grid">
@@ -48,7 +48,7 @@
               <div class="mdl-card__supporting-text">
                 <a href="/" class="mdl-button mdl-js-button display-block">All</a>
                 {% for i in categories %}
-                <a href="/{{i.category}}" class="mdl-button mdl-js-button display-block">{{i.category}}</a>
+                <a href="{{url_for("sorted", chosenCategory=i.category)}}" class="mdl-button mdl-js-button display-block">{{i.category}}</a>
                 {% endfor %}
               </div>
           </div>
@@ -68,7 +68,9 @@
               <a href="{{url_for('detailCat', id=i.id)}}"><h3>{{i.name}}</h3></a>
                 {% if id == i.user_id %}
                 <a class="mdl-button mdl-js-button" href="{{url_for('editCat', id=i.id)}}">Edit</a>
-                <a class="mdl-button mdl-js-button" href="{{url_for('deleteCat', id=i.id)}}">Delete</a>
+                <form action="{{url_for('deleteCat', id=i.id)}}" method="POST">
+                  <button type="submit" class="mdl-button mdl-js-button">Delete</button>
+                </form>
                 {% endif %}
               {% endfor %}
             </div>
