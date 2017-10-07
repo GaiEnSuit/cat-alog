@@ -33,50 +33,54 @@
           <span class="mdl-layout__title">
             Cat-Alog
           </span>
+          <div class="mdl-layout-spacer"></div>
+          <div id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></div>
+          <div id="signOutButton" class="mdl-button mdl-button--raised mdl-button--accent display-none" onclick="signOut()">Sign out</div>
         </div>
-        <div id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></div>
-        <div id="signOutButton" class="mdl-button display-none" href="#" onclick="signOut();">Sign out</div>
       </header>
       <main class="mdl-layout__content">
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-phone mdl-card mdl-shadow--8dp mdl-cell--top">
               <div class="mdl-card__title mdl-card--border">
                 <h1 class="mdl-card__title-text">
-                  Category
+                  Categories
                 </h1>
               </div>
               <div class="mdl-card__supporting-text">
-                <a href="/" class="mdl-button mdl-js-button display-block">All</a>
-                {% for i in categories %}
-                <a href="{{url_for("sorted", chosenCategory=i.category)}}" class="mdl-button mdl-js-button display-block">{{i.category}}</a>
-                {% endfor %}
+                  <a href="/" class="mdl-button mdl-js-button mdl-button--primary display-block">All</a>
+                  {% for i in categories %}
+                  <a href="{{url_for("sorted", chosenCategory=i.category)}}" class="mdl-button mdl-js-button mdl-button--accent display-block">{{i.category}}</a>
+                  {% endfor %}
               </div>
           </div>
           <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-phone mdl-card mdl-shadow--8dp">
             <div class="mdl-card__title mdl-card--border">
               <h1 class="mdl-card__title-text">
                 {% if chosenCategory %}
-                  {{chosenCategory.upper()}}
+                  {{chosenCategory.capitalize()}}
                 {% else %}
-                  ALL
+                  All
                 {% endif %}
-                CATS
+                Cats
               </h1>
             </div>
             <div class="mdl-card__supporting-text">
-              {% for i in cats %}
-              <a href="{{url_for('detailCat', id=i.id)}}"><h3>{{i.name}}</h3></a>
-                {% if id == i.user_id %}
-                <a class="mdl-button mdl-js-button" href="{{url_for('editCat', id=i.id)}}">Edit</a>
-                <form action="{{url_for('deleteCat', id=i.id)}}" method="POST">
-                  <button type="submit" class="mdl-button mdl-js-button">Delete</button>
-                </form>
-                {% endif %}
-              {% endfor %}
+              <ul class="mdl-list">
+                {% for i in cats %}
+                <li class="mdl-list__item mdl-list__item--two-line">
+                  <a class="mdl-button mdl-js-button mdl-button--primary mdl-list__item-primary-content" href="{{url_for('detailCat', id=i.id)}}">{{i.name}}</a>
+                  {% if id == i.user_id %}
+                  <a class="mdl-button mdl-js-button mdl-button--accent mdl-button--raised mdl-list__item-secondary-action" href="{{url_for('editCat', id=i.id)}}">Edit</a>
+                  <form action="{{url_for('deleteCat', id=i.id)}}" method="POST">
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-list__item-secondary-action">Delete</button>
+                  </form>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              </ul>
             </div>
-
             <div class="mdl-card__menu">
-              <a href="/new" id="newCat" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+              <a href="{{ url_for('newCat') }}" id="newCat" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                 <i class="material-icons">add</i>
               </a>
             </div>
