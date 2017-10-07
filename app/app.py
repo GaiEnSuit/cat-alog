@@ -131,8 +131,8 @@ def deleteCat(id):
 @app.route('/login', methods=['POST'])
 def logIn():
     if request.method == 'POST':
-        # Client ID
-        CLIENT_ID = "453291100677-8rb7dji1pcvpvu2hqpp5idr6n4e3o22d.apps.googleusercontent.com"
+        # Please Set Your Client ID here
+        CLIENT_ID = " "
         # Receive HTTPS data
         data = request.get_json()
         token = data['idtoken']
