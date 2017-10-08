@@ -132,7 +132,7 @@ def deleteCat(id):
 def logIn():
     if request.method == 'POST':
         # Please Set Your Client ID here
-        CLIENT_ID = " "
+        CLIENT_ID = CLIENT_ID = "###########################"
         # Receive HTTPS data
         data = request.get_json()
         token = data['idtoken']

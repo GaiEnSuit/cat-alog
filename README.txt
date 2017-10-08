@@ -1,24 +1,26 @@
-REQUIREMENTS
-1. Python3
-2. SQlalchemy
-3. Sqlite
-4. Requires google authentication library for python http://google-auth.readthedocs.io/en/latest/index.html#google-auth
-5. Open port 5000
-6. In the Log In Route replace placeholder with your google Client Id
+SETUP
+1. Install Python3
+2. Install Flask via "pip3 install Flask"
+3. Install SQLalchemy via "pip install SQLAlchemy"
+4. Install google-auth library via "pip3 install --upgrade google-auth"
+5. Open port 5000 on your server
+6. Create an Oauth2.0 in your google cloud platform
+7. Add "http://localhost:5000" to the Authorized JavaScript Origins list
+8. In the file "app.py" under the "log in route" section set CLIENT_ID to your client id from your google console
 
 Example:
-# Login In Route
 @app.route('/login', methods=['POST'])
 def logIn():
-# Client ID
-CLIENT_ID = "CLIENT ID HERE"
+    if request.method == 'POST':
+        # Please Set Your Client ID here
+        CLIENT_ID = CLIENT_ID = "###########################"
 
-USAGE
+APP USAGE
 
 1. Change directory into the app folder
 2. Run database_setup.py to create and configure database
-3. Run populate.py to populate initial data to databse
-4. Run app.py
+3. Run populate.py to populate initial data to database
+4. Run pip3 app.py
 5. Open web browser and navigate to localhost:5000
 
 API
