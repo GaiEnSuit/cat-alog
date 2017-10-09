@@ -132,7 +132,7 @@ def deleteCat(id):
 def logIn():
     if request.method == 'POST':
         # Please Set Your Client ID here
-        CLIENT_ID = CLIENT_ID = "###########################"
+        CLIENT_ID = "453291100677-8rb7dji1pcvpvu2hqpp5idr6n4e3o22d.apps.googleusercontent.com"
         # Receive HTTPS data
         data = request.get_json()
         token = data['idtoken']
@@ -151,11 +151,12 @@ def logIn():
                     newUser = User(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email'])
                     session.add(newUser)
                     session.commit()
-                    return
+                    return redirect("/", code=302)
                 else:
                     return redirect("/", code=302)
         except ValueError:
             pass
+        return redirect("/", code=302)
     else:
         return redirect("/", code=302)
 
