@@ -63,7 +63,7 @@ def sorted(chosenCategory):
 # Route for new data
 @app.route('/new/', methods=['GET', 'POST'])
 def newCat():
-    if request.method == 'POST':
+    if request.method == 'POST' and 'sub' in login_session:
         newCat = Cat(name=request.form['name'],
                      description=request.form['description'],
                      category=request.form['category'],
@@ -93,14 +93,17 @@ def detailCat(id):
 # Route to edit item
 @app.route("/<int:id>/edit/", methods=['GET', 'POST'])
 def editCat(id):
-    if request.method == 'POST':
+    if request.method == 'POST' and 'sub' in login_session:
         editedCat = session.query(Cat).filter_by(id=id).one()
-        editedCat.name = request.form['name']
-        editedCat.description = request.form['description']
-        editedCat.category = request.form['category']
-        session.add(editedCat)
-        session.commit()
-        return redirect('/', code=302)
+        if editedCat.user_id == login_session['sub']:
+            editedCat.name = request.form['name']
+            editedCat.description = request.form['description']
+            editedCat.category = request.form['category']
+            session.add(editedCat)
+            session.commit()
+            return redirect('/', code=302)
+        else:
+            return redirect('/', code=302)
     else:
         if "sub" not in login_session:
             return redirect('/', code=302)
@@ -112,17 +115,14 @@ def editCat(id):
 # Route to delete item
 @app.route('/<int:id>/delete/', methods=['GET', 'POST'])
 def deleteCat(id):
-    if request.method == 'POST':
-        if "sub" not in login_session:
+    if request.method == 'POST' and 'sub' in login_session:
+        deletedCat = session.query(Cat).filter_by(id=id).one()
+        if login_session['sub'] == deletedCat.user_id:
+            session.delete(deletedCat)
+            session.commit()
             return redirect('/', code=302)
         else:
-            deletedCat = session.query(Cat).filter_by(id=id).one()
-            if login_session['sub'] == deletedCat.user_id:
-                session.delete(deletedCat)
-                session.commit()
-                return redirect('/', code=302)
-            else:
-                return redirect('/', code=302)
+            return redirect('/', code=302)
     else:
         return redirect('/', code=302)
 
